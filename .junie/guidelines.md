@@ -1001,8 +1001,8 @@ And separately schemas for supported build step types:
           "description": "Optional space-separated command-line parameters"
         },
         "use-gradle-wrapper": {
-          "type": "boolean",
-          "description": "\n        Enable this setting if TeamCity should look for a [Gradle Wrapper](https://docs.gradle.org/current/userguide/gradle_wrapper.html) script in the project directory.\n      ",
+          "type": "string",
+          "description": "Allowed values: [\"true\"|\"false\"]. Enable this setting if TeamCity should look for a [Gradle Wrapper](https://docs.gradle.org/current/userguide/gradle_wrapper.html) script in the project directory.",
           "default": true
         },
         "gradle-wrapper-path": {
