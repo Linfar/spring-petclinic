@@ -1,6 +1,6 @@
 * When working with `teamcity app {url}` - always start the URL with '/' 
 
-* CI/CD is configured on https://demo.teamcity.com/ in the project with external ID AndreyTitovSandbox, there is an existing VCS Root with external ID AndreyTitovSandbox_SpringPetclinicRepo
+* CI/CD is configured on https://demo.teamcity.com/ in the project with external ID KubeConAmsterdam2026_SpringPetclinic, there is an existing VCS Root with external ID AndreyTitovSandbox_SpringPetclinicRepo
 
 * Use TeamCity Pipelines for the configuration, here is the YAML json schema:
 ```yaml
