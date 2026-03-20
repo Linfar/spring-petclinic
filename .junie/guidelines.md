@@ -536,6 +536,612 @@
 }
 ```
 
+And separately schemas for supported build step types:
+```
+{
+  "maven": {
+    "jsonSchema": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "goals": {
+          "type": "string",
+          "description": "Space-separated list of goals to execute"
+        },
+        "pom-location": {
+          "type": "string",
+          "description": "The path (relative to the checkout directory) to a Maven POM file.",
+          "default": "pom.xml"
+        },
+        "runner-arguments": {
+          "type": "string",
+          "description": "Additional Maven command line parameters."
+        },
+        "working-directory": {
+          "type": "string",
+          "description": "\n        The custom working directory for Maven. If not specified, the checkout directory is used.\n      "
+        },
+        "maven-version": {
+          "oneOf": [
+            {
+              "type": "object",
+              "properties": {
+                "auto": {
+                  "type": "object",
+                  "properties": {},
+                  "required": []
+                }
+              },
+              "required": [
+                "auto"
+              ],
+              "title": "Auto",
+              "description": "\n          Maven version specified by the M2_HOME environment variable.\n          If the environment variable is empty, then the default Maven version provided by the TeamCity server will be used.\n        "
+            },
+            {
+              "type": "object",
+              "properties": {
+                "defaultProvidedVersion": {
+                  "type": "object",
+                  "properties": {},
+                  "required": []
+                }
+              },
+              "required": [
+                "defaultProvidedVersion"
+              ],
+              "title": "Default provided version",
+              "description": "The default Maven version provided by TeamCity server"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "custom": {
+                  "type": "object",
+                  "properties": {
+                    "path": {
+                      "type": "string",
+                      "description": "The path to a custom Maven installation"
+                    }
+                  },
+                  "required": []
+                }
+              },
+              "required": [
+                "custom"
+              ],
+              "title": "Custom",
+              "description": "The custom Maven version found at the specified path"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "bundled-3-0": {
+                  "type": "object",
+                  "properties": {},
+                  "required": []
+                }
+              },
+              "required": [
+                "bundled-3-0"
+              ],
+              "title": "Bundled 3 0",
+              "description": "Use maven 3.0.5 bundled with TeamCity"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "bundled-3-1": {
+                  "type": "object",
+                  "properties": {},
+                  "required": []
+                }
+              },
+              "required": [
+                "bundled-3-1"
+              ],
+              "title": "Bundled 3 1",
+              "description": "Use maven 3.1.1 bundled with TeamCity"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "bundled-3-2": {
+                  "type": "object",
+                  "properties": {},
+                  "required": []
+                }
+              },
+              "required": [
+                "bundled-3-2"
+              ],
+              "title": "Bundled 3 2",
+              "description": "Use maven 3.2.5 bundled with TeamCity"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "bundled-3-3": {
+                  "type": "object",
+                  "properties": {},
+                  "required": []
+                }
+              },
+              "required": [
+                "bundled-3-3"
+              ],
+              "title": "Bundled 3 3",
+              "description": "Use maven 3.3.9 bundled with TeamCity"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "bundled-3-5": {
+                  "type": "object",
+                  "properties": {},
+                  "required": []
+                }
+              },
+              "required": [
+                "bundled-3-5"
+              ],
+              "title": "Bundled 3 5",
+              "description": "Use maven 3.5.4 bundled with TeamCity"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "bundled-3-6": {
+                  "type": "object",
+                  "properties": {},
+                  "required": []
+                }
+              },
+              "required": [
+                "bundled-3-6"
+              ],
+              "title": "Bundled 3 6",
+              "description": "Use maven 3.6.3 bundled with TeamCity"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "bundled-3-8": {
+                  "type": "object",
+                  "properties": {},
+                  "required": []
+                }
+              },
+              "required": [
+                "bundled-3-8"
+              ],
+              "title": "Bundled 3 8",
+              "description": "Use maven 3.8.6 bundled with TeamCity"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "bundled-3-9": {
+                  "type": "object",
+                  "properties": {},
+                  "required": []
+                }
+              },
+              "required": [
+                "bundled-3-9"
+              ],
+              "title": "Bundled 3 9",
+              "description": "Use maven 3.9.11 bundled with TeamCity"
+            }
+          ],
+          "unevaluatedProperties": false,
+          "title": "Maven version",
+          "description": "Maven version to use"
+        },
+        "user-settings-selection": {
+          "type": "string",
+          "description": "Use one of the predefined settings files or provide a custom path. By default, the standard Maven settings file location is used.",
+          "default": "userSettingsSelection:default"
+        },
+        "user-settings-path": {
+          "type": "string",
+          "description": "The path to a user settings file"
+        },
+        "local-repo-scope": {
+          "type": "string",
+          "oneOf": [
+            {
+              "const": "maven-default",
+              "title": "Maven default",
+              "description": "\n          Shared by all build configurations and all agents on the machine.\n        "
+            },
+            {
+              "const": "agent",
+              "title": "Agent",
+              "description": "\n          Shared by all the builds on the agent. Can be cleaned by an agent to free disk space.\n        "
+            },
+            {
+              "const": "build-configuration",
+              "title": "Build configuration",
+              "description": "\n          Shared by all the builds in a single build configuration. Can be cleaned by an agent to free disk space.\n        "
+            }
+          ],
+          "default": "agent",
+          "title": "Local repo scope"
+        },
+        "is-incremental": {
+          "type": "boolean",
+          "description": "Enable incremental building"
+        },
+        "jdk-home": {
+          "type": "string",
+          "description": "\n        A path to [JDK](https://www.jetbrains.com/help/teamcity/?Predefined+Build+Parameters#PredefinedBuildParameters-DefiningJava-relatedEnvironmentVariables) to use.\n        By default, the JAVA_HOME environment variable or the agent\u0027s own Java is used.\n      "
+        },
+        "jvm-args": {
+          "type": "string",
+          "description": "\n        The space-separated list of additional arguments for JVM\n      "
+        },
+        "coverage-engine": {
+          "oneOf": [
+            {
+              "type": "object",
+              "properties": {
+                "idea": {
+                  "type": "object",
+                  "properties": {
+                    "include-classes": {
+                      "type": "string",
+                      "description": "\n            Newline-separated patterns for fully qualified class names to be analyzed by code coverage.\n            A pattern should start with a valid package name and can contain a wildcard, for example: org.apache.*\n          "
+                    },
+                    "exclude-classes": {
+                      "type": "string",
+                      "description": "\n            Newline-separated patterns for fully qualified class names to be excluded from the coverage. Exclude patterns have priority over include patterns.\n          "
+                    }
+                  },
+                  "required": []
+                }
+              },
+              "required": [
+                "idea"
+              ],
+              "title": "Idea"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "jacoco": {
+                  "type": "object",
+                  "properties": {
+                    "class-locations": {
+                      "type": "string",
+                      "description": "\n            Newline-delimited set of path patterns in the form of +|-:path to scan for classfiles to be analyzed.\n            Excluding libraries and test classes from analysis is recommended. Ant like patterns are supported.\n          "
+                    },
+                    "exclude-classes": {
+                      "type": "string",
+                      "description": "\n            Newline-separated patterns for fully qualified class names to be excluded from the coverage.\n            Exclude patterns have priority over include patterns.\n          "
+                    },
+                    "jacoco-version": {
+                      "type": "string",
+                      "description": "JaCoCo version to use"
+                    }
+                  },
+                  "required": []
+                }
+              },
+              "required": [
+                "jacoco"
+              ],
+              "title": "Jacoco"
+            }
+          ],
+          "unevaluatedProperties": false,
+          "title": "Coverage engine",
+          "description": "\n        Specifies coverage engine to use\n      "
+        },
+        "kubernetes-pull-policy": {
+          "type": "string",
+          "oneOf": [
+            {
+              "const": "if-not-present",
+              "title": "If not present"
+            },
+            {
+              "const": "always",
+              "title": "Always"
+            },
+            {
+              "const": "never",
+              "title": "Never"
+            }
+          ],
+          "default": "if-not-present",
+          "title": "Kubernetes pull policy",
+          "description": "\n        Specifies which pull policy will be used with the specified image at each pod\u0027s execution.\n      "
+        },
+        "docker-image": {
+          "type": "string",
+          "description": "\n        Specifies which Docker image to use for running this build step. I.e. the build step will be run inside specified docker image, using \u0027docker run\u0027 wrapper.\n      "
+        },
+        "docker-image-platform": {
+          "type": "string",
+          "oneOf": [
+            {
+              "const": "any",
+              "title": "Any"
+            },
+            {
+              "const": "linux",
+              "title": "Linux"
+            },
+            {
+              "const": "windows",
+              "title": "Windows"
+            }
+          ],
+          "title": "Docker image platform",
+          "description": "\n        Specifies which Docker image platform will be used to run this build step.\n      "
+        },
+        "docker-pull": {
+          "type": "boolean",
+          "description": "\n        If enabled, \"docker pull [image][dockerImage]\" will be run before docker run.\n      "
+        },
+        "docker-run-parameters": {
+          "type": "string",
+          "description": "\n        Additional docker run command arguments\n      "
+        }
+      },
+      "required": [],
+      "title": "maven",
+      "description": "\n      A [build step](https://www.jetbrains.com/help/teamcity/?Maven) running Maven\n    "
+    }
+  },
+  "script": {
+    "jsonSchema": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "working-dir": {
+          "type": "string",
+          "description": "\n        [Build working directory](https://www.jetbrains.com/help/teamcity/?Build+Working+Directory) for script,\n        specify it if it is different from the [checkout directory](https://www.jetbrains.com/help/teamcity/?Build+Checkout+Directory).\n      "
+        },
+        "script-content": {
+          "type": "string",
+          "description": "\n        Content of the script to run\n      "
+        },
+        "format-stderr-as-error": {
+          "type": "boolean",
+          "description": "\n        Log stderr output as errors in the build log\n      "
+        },
+        "kubernetes-pull-policy": {
+          "type": "string",
+          "oneOf": [
+            {
+              "const": "if-not-present",
+              "title": "If not present"
+            },
+            {
+              "const": "always",
+              "title": "Always"
+            },
+            {
+              "const": "never",
+              "title": "Never"
+            }
+          ],
+          "default": "if-not-present",
+          "title": "Kubernetes pull policy",
+          "description": "\n        Specifies which pull policy will be used with the specified image at each pod\u0027s execution.\n      "
+        },
+        "docker-image": {
+          "type": "string",
+          "description": "\n        Specifies which Docker image to use for running this build step. I.e. the build step will be run inside specified docker image, using \u0027docker run\u0027 wrapper.\n      "
+        },
+        "docker-image-platform": {
+          "type": "string",
+          "oneOf": [
+            {
+              "const": "any",
+              "title": "Any"
+            },
+            {
+              "const": "linux",
+              "title": "Linux"
+            },
+            {
+              "const": "windows",
+              "title": "Windows"
+            }
+          ],
+          "title": "Docker image platform",
+          "description": "\n        Specifies which Docker image platform will be used to run this build step.\n      "
+        },
+        "docker-pull": {
+          "type": "boolean",
+          "description": "\n        If enabled, \"docker pull [image][dockerImage]\" will be run before docker run.\n      "
+        },
+        "docker-run-parameters": {
+          "type": "string",
+          "description": "\n        Additional docker run command arguments\n      "
+        }
+      },
+      "required": [
+        "script-content"
+      ],
+      "title": "script",
+      "description": "\n      A [build step](https://www.jetbrains.com/help/teamcity/?Command+Line) running a script with the specified content\n    "
+    }
+  },
+  "gradle": {
+    "jsonSchema": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "tasks": {
+          "type": "string",
+          "description": "Space-separated task names. TeamCity runs the \u0027default\u0027 task if this field is empty."
+        },
+        "build-file": {
+          "type": "string",
+          "description": "\n        The path to a custom Gradle build file. Leave this field empty if your build file is build.gradle located in the root directory.\n        This property is deprecated for Gradle versions 9.0 and higher, use the additional `-p \u003cpath-relative-to-checkout-directory\u003e` command line parameter instead.\n      "
+        },
+        "incremental": {
+          "type": "boolean",
+          "description": "Enable this option to allow TeamCity to detect Gradle modules affected by a modified build, and run the :buildDependents only for these affected modules."
+        },
+        "working-directory": {
+          "type": "string",
+          "description": "Custom working directory for the Gradle script"
+        },
+        "gradle-home": {
+          "type": "string",
+          "description": "The path to a custom Gradle version. This version will be used instead of the default Gradle version referenced by the GRADLE_HOME environment variable."
+        },
+        "gradle-params": {
+          "type": "string",
+          "description": "Optional space-separated command-line parameters"
+        },
+        "use-gradle-wrapper": {
+          "type": "boolean",
+          "description": "\n        Enable this setting if TeamCity should look for a [Gradle Wrapper](https://docs.gradle.org/current/userguide/gradle_wrapper.html) script in the project directory.\n      ",
+          "default": true
+        },
+        "gradle-wrapper-path": {
+          "type": "string",
+          "description": "The path (relative to the working directory) to a Gradle Wrapper script"
+        },
+        "enable-debug": {
+          "type": "boolean",
+          "description": "\n        Runs Gradle with the \u0027debug\u0027 (-d) log level. See also: [Logging Sensitive Information](https://docs.gradle.org/current/userguide/logging.html#sec:debug_security).\n      "
+        },
+        "enable-stacktrace": {
+          "type": "boolean",
+          "description": "\n        Allows Gradle to print [truncated stacktraces](https://docs.gradle.org/current/userguide/logging.html#stacktraces).\n      "
+        },
+        "jdk-home": {
+          "type": "string",
+          "description": "\n        Custom [JDK](https://www.jetbrains.com/help/teamcity/?Predefined+Build+Parameters#PredefinedBuildParameters-DefiningJava-relatedEnvironmentVariables) to use.\n        The default is JAVA_HOME environment variable or the agent\u0027s own Java.\n      "
+        },
+        "jvm-args": {
+          "type": "string",
+          "description": "\n        Space-separated list of additional arguments for JVM\n      "
+        },
+        "coverage-engine": {
+          "oneOf": [
+            {
+              "type": "object",
+              "properties": {
+                "idea": {
+                  "type": "object",
+                  "properties": {
+                    "include-classes": {
+                      "type": "string",
+                      "description": "\n            Newline-separated patterns for fully qualified class names to be analyzed by code coverage.\n            A pattern should start with a valid package name and can contain a wildcard, for example: org.apache.*\n          "
+                    },
+                    "exclude-classes": {
+                      "type": "string",
+                      "description": "\n            Newline-separated patterns for fully qualified class names to be excluded from the coverage. Exclude patterns have priority over include patterns.\n          "
+                    }
+                  },
+                  "required": []
+                }
+              },
+              "required": [
+                "idea"
+              ],
+              "title": "Idea"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "jacoco": {
+                  "type": "object",
+                  "properties": {
+                    "class-locations": {
+                      "type": "string",
+                      "description": "\n            Newline-delimited set of path patterns in the form of +|-:path to scan for classfiles to be analyzed.\n            Excluding libraries and test classes from analysis is recommended. Ant like patterns are supported.\n          "
+                    },
+                    "exclude-classes": {
+                      "type": "string",
+                      "description": "\n            Newline-separated patterns for fully qualified class names to be excluded from the coverage.\n            Exclude patterns have priority over include patterns.\n          "
+                    },
+                    "jacoco-version": {
+                      "type": "string",
+                      "description": "JaCoCo version to use"
+                    }
+                  },
+                  "required": []
+                }
+              },
+              "required": [
+                "jacoco"
+              ],
+              "title": "Jacoco"
+            }
+          ],
+          "unevaluatedProperties": false,
+          "title": "Coverage engine",
+          "description": "\n        Specifies coverage engine to use\n      "
+        },
+        "kubernetes-pull-policy": {
+          "type": "string",
+          "oneOf": [
+            {
+              "const": "if-not-present",
+              "title": "If not present"
+            },
+            {
+              "const": "always",
+              "title": "Always"
+            },
+            {
+              "const": "never",
+              "title": "Never"
+            }
+          ],
+          "default": "if-not-present",
+          "title": "Kubernetes pull policy",
+          "description": "\n        Specifies which pull policy will be used with the specified image at each pod\u0027s execution.\n      "
+        },
+        "docker-image": {
+          "type": "string",
+          "description": "\n        Specifies which Docker image to use for running this build step. I.e. the build step will be run inside specified docker image, using \u0027docker run\u0027 wrapper.\n      "
+        },
+        "docker-image-platform": {
+          "type": "string",
+          "oneOf": [
+            {
+              "const": "any",
+              "title": "Any"
+            },
+            {
+              "const": "linux",
+              "title": "Linux"
+            },
+            {
+              "const": "windows",
+              "title": "Windows"
+            }
+          ],
+          "title": "Docker image platform",
+          "description": "\n        Specifies which Docker image platform will be used to run this build step.\n      "
+        },
+        "docker-pull": {
+          "type": "boolean",
+          "description": "\n        If enabled, \"docker pull [image][dockerImage]\" will be run before docker run.\n      "
+        },
+        "docker-run-parameters": {
+          "type": "string",
+          "description": "\n        Additional docker run command arguments\n      "
+        }
+      },
+      "required": [],
+      "title": "gradle",
+      "description": "\n      A [build step](https://www.jetbrains.com/help/teamcity/?Gradle) running gradle script\n    "
+    }
+  },
+}
+```
+
 * To list available pipelines, make GET `app/rest/pipelines/parentProject:{parent_project_id}`. `-H "Accept: application/json"` header is required. Pipelines are NOT listed as subprojects or configurations of a project.
 
 * To create a pipeline, make POST 'app/pipeline?parentProjectExtId={parent_project_ext_id}' endpoint. An example of the request body:
