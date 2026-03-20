@@ -5,7 +5,6 @@
 * Use TeamCity Pipelines for the configuration, here is the YAML json schema:
 ```yaml
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "Pipeline schema",
   "description": "Main pipeline definition.",
   "required": [
@@ -531,14 +530,6 @@
       "items": {
         "type": "string"
       }
-    },
-    "version": {
-      "type": "integer",
-      "title": "YAML API Version",
-      "description": "The version of YAML API",
-      "enum": [
-        1
-      ]
     }
   },
   "additionalProperties": false
