@@ -1014,7 +1014,7 @@ And separately schemas for supported build step types:
           "description": "\n        Runs Gradle with the \u0027debug\u0027 (-d) log level. See also: [Logging Sensitive Information](https://docs.gradle.org/current/userguide/logging.html#sec:debug_security).\n      "
         },
         "enable-stacktrace": {
-          "type": "boolean",
+          "type": "string",
           "description": "\n        Allows Gradle to print [truncated stacktraces](https://docs.gradle.org/current/userguide/logging.html#stacktraces).\n      "
         },
         "jdk-home": {
